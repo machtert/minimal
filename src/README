@@ -63,6 +63,14 @@ Currently available overlay bundles:
                    workloads on RAM or disks. 'fio' is essential for
                    troubleshooting data I/O bottlenecks.
 
+  Golang         - Go is an open source programming language that makes it easy
+                   to build simple, reliable, and efficient software.
+
+  GraalVM        - Universal virtual machine for running applications written
+                   in JavaScript, Python, Ruby, R, JVM-based languages like
+                   Java, Scala, Clojure, Kotlin, and LLVM-based languages such
+                   as C and C++.
+
   JRE / JDK      - Oracle JRE/JDK. This overlay bundle requires some manual
                    preparation steps. Refer to the 'JAVA_ARCHIVE' property in
                    the '.config' file for more information. This overlay bundle
@@ -127,6 +135,11 @@ Currently available overlay bundles:
                    This package will create symlinks on top of 'vi'.
 
   ZLIB           - software library used for data compression.
+
+  Zulu JDK       - Zulu is an enterprise quality, certified build of OpenJDK
+                   that can be deployed on multiple platforms. Zulu is free to
+                   download, use and redistribute. This overlay bundle requires
+                   GLIBC and ZLIB.
 
 The overlay bundles can be found in this directory:
 

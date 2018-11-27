@@ -1,4 +1,19 @@
-## Minimal Linux Live
+# Minimal Linux Live [<img align="right" src="https://travis-ci.org/ivandavidov/minimal.svg?branch=master">](https://travis-ci.org/ivandavidov/minimal)
+
+* [Overview](#overview)
+* [Current development state](#current-development-state)
+* [Future improvements](#future-improvements)
+* [How to build](#how-to-build)
+* [Overlay bundles](#overlay-bundles)
+* [GraalVM](#graalvm)
+* [BIOS and UEFI](#bios-and-uefi)
+* [Installation](#installation)
+* [Other projects](#other-projects)
+* [Thank you!](#thank-you)
+
+---
+
+### Overview
 
 The hosting space for [Minimal Linux Live](http://minimal.idzona.com "Minimal Linux Live") is provided by the cool guys at [Microweber](http://microweber.com "Microweber - Website Builder and Laravel CMS") - check them out. :)
 
@@ -17,40 +32,42 @@ The [README](https://github.com/ivandavidov/minimal/blob/master/src/README) docu
 
 You can experiment with Minimal Linux Live directly in your browser by using [JavaScript PC Emulator](http://minimal.idzona.com/emulator "Minimal Linux Live in JavaScript PC emulator"). Here is a screenshot:
 
-![Minimal Linux Live JavaScript Emulator](http://ivandavidov.github.io/minimal/www/assets/img/emulator_01.jpg)
+![Minimal Linux Live JavaScript Emulator](docs/www/assets/img/emulator_01.jpg)
 
 Did I mention the [YouTube channel](https://youtu.be/u5KYDaCLChc?list=PLe3TW5jDbUAiN9E9lvYFLIFFqAjjZS9xS "Minimal Linux Live - YouTube channel") where you can watch some of the cool Minimal Linux Live features? No? Well, now you know about it! :)
 
 This is a screenshot of the current development version of Minimal Linux Live:
 
-![Minimal Linux Live](http://ivandavidov.github.io/minimal/www/assets/img/minimal_linux_live.jpg)
+![Minimal Linux Live](docs/www/assets/img/minimal_linux_live.jpg)
 
-## Current development state (07-Jan-2018)
+### Current development state
 
-* Linux kernel 4.14.12 (longterm)
-* GNU C Library 2.26 (stable)
-* BusyBox 1.27.2 (stable)
-* Stable on default Ubuntu 16.04 installation with applied system updates.
+As of **23-Jun-2018**:
 
-## Future improvements
+* Linux kernel 4.17.2 (stable)
+* GNU C Library 2.27 (stable)
+* BusyBox 1.28.4 (stable)
+* Stable build on default Ubuntu 18.04 installation with applied system updates.
+
+### Future improvements
 
 Take a look at the [issues](http://github.com/ivandavidov/minimal/issues) page where all future MLL improvements are tracked.
 
-## How to build
+### How to build
 
 The section below is for Ubuntu and other Debian based distros.
 
 ```
 # Resove build dependencies
-sudo apt install wget make gawk gcc bc libelf-dev xorriso
+sudo apt install wget make gawk gcc bc bison flex xorriso libelf-dev libssl-dev
 
 # Build everything and produce ISO image.
 ./build_minimal_linux_live.sh
 ```
 
-The default build process uses some custom provided ``CFLAGS``. They can be found in the ``.config`` file. Some of these additional flags were introduced in order to fix different issues which were reported during the development phase. However, there is no guarantee that the build process will run smoothly on your system with these particular flags. If you get compilation issues (please note that I'm talking about compilation issues, not about general shell script issues), you can try to disable these flags and then start the build process again. It may turn out that on your particular host system you don't need these flags. 
+The default build process uses some custom provided ``CFLAGS``. They can be found in the ``.config`` file. Some of these additional flags were introduced in order to fix different issues which were reported during the development phase. However, there is no guarantee that the build process will run smoothly on your system with these particular flags. If you get compilation issues (please note that I'm talking about compilation issues, not about general shell script issues), you can try to disable these flags and then start the build process again. It may turn out that on your particular host system you don't need these flags.
 
-## Overlay bundles
+### Overlay bundles
 
 **Important note!** Most of the overlay bundles come without support since the build process for almost all of them is host specific and can vary significantly between different machines. Some overlay bundles have no dependencies to the host machine, e.g. the bundles which provide the DHCP functionality and the MLL source code. These bundles are enabled by default.
 
@@ -74,11 +91,27 @@ cd minimal_overlay
 ./overlay_build.sh openjdk
 ```
 
-## BIOS and UEFI
+### GraalVM
+
+The current development version of MLL partially supports [GraalVM](http://graalvm.org) (provided as overlay bundle). Note that the version of GraalVM in MLL is _release candidate_ which means it may not be very stable. Moreover, GraalVM has runtime dependencies on ``GCC`` and ``Bash`` and therefore some GraalVM feature are not supported in MLL, e.g. the ``gu`` updater and almost all GVM language wrapper scripts, including the ``R`` wrappers. Nevertheless, the core GVM features work fine. Java, Python, Ruby, Node and JavaScript work in MLL/GraalVM environment. Great, isn't it! :)
+
+![GraalVM languages](docs/www/assets/img/graal/graal_1.jpg)
+
+![GraalVM - Java](docs/www/assets/img/graal/graal_2.jpg)
+
+![GraalVM - Python](docs/www/assets/img/graal/graal_3.jpg)
+
+![GraalVM - Ruby](docs/www/assets/img/graal/graal_4.jpg)
+
+![GraalVM - Node](docs/www/assets/img/graal/graal_5.jpg)
+
+![GraalVM - JS](docs/www/assets/img/graal/graal_6.jpg)
+
+### BIOS and UEFI
 
 Minimal Linux Live can be used on UEFI systems (as of version ``28-Jan-2018``) thanks to the [systemd-boot](https://github.com/ivandavidov/systemd-boot) project. There are three build flavors that you can choose from:
 
-* ``bios`` - MLL will be bootbale only on legacy BIOS based systems. This is the default build flavor.
+* ``bios`` - MLL will be bootable only on legacy BIOS based systems. This is the default build flavor.
 * ``uefi`` - MLL will be bootable only on UEFI based systems.
 * ``both`` - MLL will be bootable on both legacy BIOS and modern UEFI based systems.
 
@@ -86,7 +119,7 @@ The generated MLL iso image is 'hybrid' which means that if it is 'burned' on ex
 
 Minimal Linux Live version ``20-Jan-2017`` provides experimental UEFI support and the MLL ISO image can be used on legacy BIOS based systems and on UEFI based systems with enabled UEFI shell (level support 1 or higher, see section ``3.1 - Levels Of Support`` of the [UEFI Shell specification](http://www.uefi.org/sites/default/files/resources/UEFI_Shell_2_2.pdf)).
 
-## Installation
+### Installation
 
 The build process produces ISO image which you can use in virtual machine or you can burn it on real CD/DVD. Installing MLL on USB flash drive currently is not supported but it can be easily achieved by using ``syslinux`` or  ``extlinux`` since MLL requires just two files (one kernel file and another initramfs file). This applies for legacy BIOS based systems.
 
@@ -99,7 +132,7 @@ Yet another way to install MLL on USB flash drive is by using the ``dd`` tool:
 dd if=minimal_linux_live.iso of=/dev/xxx
 ```
 
-The USB flash device will be recognezed as bootable device and you should be able to boot MLL successfully from it. If you have chosen the 'combined' build flavor (i.e. value ``both`` for the corresponding configuration property), then your USB flash device will be bootable on both legacy BIOS and modern UEFI based systems.
+The USB flash device will be recognized as bootable device and you should be able to boot MLL successfully from it. If you have chosen the 'combined' build flavor (i.e. value ``both`` for the corresponding configuration property), then your USB flash device will be bootable on both legacy BIOS and modern UEFI based systems.
 
 The build process also generates image the file ``mll_image.tgz``. This image contains everything from the initramfs area and everything from the overlay area, i.e. all overlay bundles that have been installed during the MLL build process. You can import and use the image in Docker like this:
 
@@ -111,11 +144,13 @@ docker import mll_image.tgz minimal-linux-live:latest
 docker run -it minimal-linux-live /bin/sh
 ```
 
-## Projects based on Minimal Linux Live:
+### Other projects
 
 * [Minimal Linux Script](https://github.com/ivandavidov/minimal-linux-script) - very simplified and minimalistic version of MLL. This project is recommended as a starting point for beginners.
 
 * [systemd-boot](https://github.com/ivandavidov/systemd-boot) - this project provides the UEFI boot loader images that MLL relies on. It also provides helper shell scripts which generate UEFI compatible MLL ISO images out of the already existing BIOS compatible MLL ISO images.
+
+* [Minimal Container Linux](https://github.com/prologic/minimal-container-linux) - minimal live Linux environment with support for Docker.
 
 * [RedoxOS Installer](https://github.com/RedoxOS/installer) - the original installer for [Redox OS](www.redox-os.org) is based on simplified version of Minimal Linux Live.
 
@@ -131,7 +166,7 @@ docker run -it minimal-linux-live /bin/sh
 
 * [prologic's MLL](https://github.com/prologic/minimal) - this fork adds Python support to the MLL runtime environment.
 
-* [KernelISO](https://github.com/rleon/kerneliso) - extended version of MLL.
+* [KernelISO](https://github.com/rleon/kerneliso) - extended version of MLL, based on older version of MLL.
 
 * [diaob's MLL](https://github.com/Diaob/minimal) - MLL translation to Simplified Chinese.
 
@@ -139,7 +174,7 @@ docker run -it minimal-linux-live /bin/sh
 
 * [Runlinux](https://github.com/cirosantilli/runlinux) - environment to build and test Linux kernels.
 
-## Thank you!
+### Thank you!
 
 Do you like this project? Yes? Well, in that case I would very much appreciate it if you give your honest opinion about MLL in [DistroWatch](http://distrowatch.com/dwres.php?resource=ratings&distro=mll). And don't forget to check the Minimal Linux Live page on [Facebook](http://facebook.com/MinimalLinuxLive).
 

@@ -1,4 +1,4 @@
-# Minimal Linux Live [<img align="right" src="https://travis-ci.org/ivandavidov/minimal.svg?branch=master">](https://travis-ci.org/ivandavidov/minimal)
+# Minimal Linux Live with FIRESTARTER [<img align="right" src="https://travis-ci.org/ivandavidov/minimal.svg?branch=master">](https://travis-ci.org/ivandavidov/minimal)
 
 * [Overview](#overview)
 * [Current development state](#current-development-state)

@@ -1,4 +1,4 @@
-# Minimal Linux Live with FIRESTARTER [<img align="right" src="https://travis-ci.org/ivandavidov/minimal.svg?branch=master">](https://travis-ci.org/ivandavidov/minimal)
+# Minimal Linux Live with FIRESTARTER [<img align="right" src="https://travis-ci.org/tud-zih-energy/minimal-linux-FIRESTARTER.svg?branch=master">](https://travis-ci.org/tud-zih-energy/minimal-linux-FIRESTARTER)
 
 For creating a minimal Linux distribution with integrated FIRESTARTER.
 
